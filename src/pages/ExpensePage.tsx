@@ -3,6 +3,8 @@ import { useLocalStorage } from '../useLocalStorage'
 import Budget from '../components/Budget'
 import ExpenseForm from '../components/ExpenseForm'
 import ExpenseList from '../components/ExpenseList'
+import { ROUTES } from '../ROUTES'
+import { Link } from 'react-router-dom'
 
 export type Expense = {
     id: number
@@ -166,6 +168,8 @@ export default function ExpensePage() {
       <button type="button" onClick={() => dispatch({type: "DELETE"})}>削除</button>
   
       <ExpenseList expenses={state.expenses} onChange={handleChecked} />
+      <Link to={ROUTES.HOME}>ホームページへ</Link>
+      <Link to={ROUTES.GRAPH}>グラフへ</Link>
       </>
     )
 }
