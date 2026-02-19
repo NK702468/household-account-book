@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage"
 import ExpensePage from "./pages/ExpensePage"
 import GraphPage from "./pages/GraphPage"
 import "./App.css"
+import { ROUTES } from "./ROUTES"
 
 function App() {
   
@@ -11,9 +12,9 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />}/>
-        <Route path="/expense" element={<ExpensePage />}/>
-        <Route path="/graph" element={<GraphPage />}/>
+        <Route path={ROUTES.HOME} element={<HomePage />}/>
+        <Route path={ROUTES.EXPENSE} element={<ExpensePage />}/>
+        <Route path={ROUTES.GRAPH} element={<GraphPage />}/>
       </Routes>
     </BrowserRouter>
     </>
