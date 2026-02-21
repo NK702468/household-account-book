@@ -7,9 +7,9 @@ type Props = {}
 
 export default function GraphPage({}: Props) {
   const data: object[] = [
-    {month: "1月", sales: 400},
-    {month: "2月", sales: 300},
-    {month: "3月", sales: 500}
+    {month: "1月", storeA: 400, storeB: 200},
+    {month: "2月", storeA: 500, storeB: 300},
+    {month: "3月", storeA: 700, storeB: 800}
   ];
 
   return (
@@ -18,7 +18,8 @@ export default function GraphPage({}: Props) {
         <XAxis dataKey="month"/>
         <YAxis />
         <Tooltip />
-        <Bar dataKey="sales"/>
+        <Bar dataKey="storeA" stackId="a"/>
+        <Bar dataKey="storeB" stackId="a"/>
       </BarChart>
       <Link to={ROUTES.EXPENSE}>記録へ</Link>
       <Link to={ROUTES.HOME}>ホームページへ</Link>
