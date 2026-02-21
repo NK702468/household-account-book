@@ -17,8 +17,8 @@ export default function GraphPage({}: Props) {
         <XAxis dataKey="name"/>
         <YAxis />
         <Tooltip />
-        <Bar dataKey="storeA" stackId="a"/>
-        <Bar dataKey="storeB" stackId="a"/>
+        <Bar dataKey="storeA" />
+        <Bar dataKey="storeB" />
       </BarChart>
       <Link to={ROUTES.EXPENSE}>記録へ</Link>
       <Link to={ROUTES.HOME}>ホームページへ</Link>
