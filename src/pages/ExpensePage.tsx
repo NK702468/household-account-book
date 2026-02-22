@@ -22,7 +22,7 @@ export type Expense = {
     type: "fixed" | "variable" | null
     month: string
   }
-  
+
 export default function ExpensePage({state, dispatch, currentMonth, setCurrentMonth}: Props) {
     const [variableValue, setVariableValue] = useState("");
     const [fixedValue, setFixedValue] = useState("");
@@ -54,6 +54,10 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     }
   
     const handleADD = () => {
+
+      if (!expenseType) return;
+      if (!costValue || costValue <= 0) return;
+
       const newExpense: Expense = {
         id:Date.now(),
         amount: costValue,
@@ -71,7 +75,6 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setFixedValue("");
       setExpenseType(null);
       setCostValue(0);
-      console.log(state.expenses);
     }
   
     const handleChecked = (id: number) => {
