@@ -5,21 +5,35 @@ import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recha
 
 type Props = {
   state:State
+  // currentMonth: string
 }
 
 export default function GraphPage({state}: Props) {
-  const total = state.expenses.reduce((sum, expense) => {
-    return sum + expense.amount;
-  },0)
+  const monthlyTotals = state.expenses.reduce((acc, expense) => {
+    const month = expense.month
 
-  const data = [
-    {name: "合計支出", total: total}
-  ];
+    if(!acc[month]){
+      acc[month] = 0;
+    }
+
+    acc[month] += expense.amount;
+    
+    return acc;
+
+  }, {} as Record<string, number>)
+
+  const data = Object.entries(monthlyTotals).map(([month, total]) => {
+    return {
+      month,
+      total
+    }
+  })
+
   return (
     <>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
-          <XAxis dataKey="name"/>
+          <XAxis dataKey="month"/>
           <YAxis />
           <Tooltip />
           <Bar dataKey="total"/>

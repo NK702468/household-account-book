@@ -6,30 +6,30 @@ import ExpenseList from '../components/ExpenseList'
 import { ROUTES } from '../ROUTES'
 import { Link } from 'react-router-dom'
 import { State } from "../App"
+
 type Props = {
   state: State
   dispatch: React.Dispatch<any>;
+  currentMonth: string
+  setCurrentMonth: React.Dispatch<React.SetStateAction<string>>
 }
+
 export type Expense = {
     id: number
     amount: number
     category:string
     checked: boolean
     type: "fixed" | "variable" | null
+    month: string
   }
-export default function ExpensePage({state, dispatch}: Props) {
+  
+export default function ExpensePage({state, dispatch, currentMonth, setCurrentMonth}: Props) {
     const [variableValue, setVariableValue] = useState("");
     const [fixedValue, setFixedValue] = useState("");
     const [expenseType, setExpenseType] = useState<"fixed" | "variable" | null>(null)
     const [costValue, setCostValue] = useState(0);
     const [inputBudget, setInputBudget] = useState("");
     const [budget, setBudget] = useLocalStorage("budget", 0);
-    const [currentMonth, setCurrentMonth] = useState(() => {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-      return `${year}-${String(month).padStart(2, "0")}`
-    })
   
     const handleBudget = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
       setInputBudget(e.target.value);
@@ -61,7 +61,8 @@ export default function ExpensePage({state, dispatch}: Props) {
           ? fixedValue
           :variableValue,
         checked: false,
-        type: expenseType
+        type: expenseType,
+        month: currentMonth
       }
   
       dispatch({type:"ADD", payload:newExpense});

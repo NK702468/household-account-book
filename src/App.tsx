@@ -5,16 +5,21 @@ import ExpensePage from "./pages/ExpensePage"
 import "./App.css"
 import { ROUTES } from "./ROUTES"
 import { Expense } from "./pages/ExpensePage";
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useState } from "react"
 
 export type State = {
       expenses:Expense[]
     }
-  
-    
-  
+
 function App() {
-  
+
+    const [currentMonth, setCurrentMonth] = useState(() => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+        return `${year}-${String(month).padStart(2, "0")}`
+      })
+
     const initialState: State = {
       expenses: []
     }
@@ -66,7 +71,7 @@ function App() {
       return initialState;
     }
 
-  const [state, dispatch] = useReducer(reducer, initialState, init);
+    const [state, dispatch] = useReducer(reducer, initialState, init);
   
     useEffect(() => {
       localStorage.setItem("expenses", JSON.stringify(state))
@@ -77,7 +82,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.HOME} element={<HomePage />}/>
-        <Route path={ROUTES.EXPENSE} element={<ExpensePage state={state} dispatch={dispatch}/>}/>
+        <Route path={ROUTES.EXPENSE} element={
+          <ExpensePage 
+            state={state} 
+            dispatch={dispatch}
+            currentMonth={currentMonth}
+            setCurrentMonth={setCurrentMonth}
+        />}/>
         <Route path={ROUTES.GRAPH} element={<GraphPage state={state}/>}/>
       </Routes>
     </BrowserRouter>
