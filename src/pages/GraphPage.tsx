@@ -16,7 +16,7 @@ export default function GraphPage({state}: Props) {
     {name: "合計支出", total: total}
   ];
   return (
-    <div style={{width: "100%", height: 300}}>
+    <div>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <XAxis dataKey="name"/>
