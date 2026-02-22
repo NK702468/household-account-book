@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { ROUTES } from "../ROUTES"
 import { State } from "../App"
+import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts"
 
 type Props = {
   state:State
@@ -11,11 +12,20 @@ export default function GraphPage({state}: Props) {
     return sum + expense.amount;
   },0)
 
+  const data = [
+    {name: "合計支出", total: total}
+  ];
   return (
-    <div>
-      {total}
-      <Link to={ROUTES.HOME}>HomePageへ</Link>
+    <div style={{width: "100%", height: 300}}>
+      <BarChart data={data}>
+        <XAxis dataKey="name"/>
+        <YAxis />
+        <Tooltip />
+        <Bar dataKey="total"/>
+      </BarChart>
+
       <Link to={ROUTES.EXPENSE}>ExpensePageへ</Link>
+      <Link to={ROUTES.HOME}>HomePageへ</Link>
     </div>
   )
 }
