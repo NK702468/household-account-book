@@ -11,6 +11,10 @@ export type State = {
       expenses:Expense[]
     }
   
+    
+  
+function App() {
+  
     const initialState: State = {
       expenses: []
     }
@@ -61,15 +65,12 @@ export type State = {
       }
       return initialState;
     }
-  
-    const [state, dispatch] = useReducer(reducer, initialState, init);
+
+  const [state, dispatch] = useReducer(reducer, initialState, init);
   
     useEffect(() => {
       localStorage.setItem("expenses", JSON.stringify(state))
     }, [state])
-  
-function App() {
-  
 
   return (
     <>

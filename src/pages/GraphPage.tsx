@@ -14,7 +14,6 @@ export default function GraphPage({state}: Props) {
   return (
     <div>
       {total}
-
       <Link to={ROUTES.HOME}>HomePageへ</Link>
       <Link to={ROUTES.EXPENSE}>ExpensePageへ</Link>
     </div>
