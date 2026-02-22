@@ -16,8 +16,8 @@ export default function GraphPage({state}: Props) {
     {name: "合計支出", total: total}
   ];
   return (
-    <div style={{ height: 300 }}>
-      <ResponsiveContainer width="100%" height="100%">
+    <>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <XAxis dataKey="name"/>
           <YAxis />
@@ -28,6 +28,6 @@ export default function GraphPage({state}: Props) {
 
       <Link to={ROUTES.EXPENSE}>ExpensePageへ</Link>
       <Link to={ROUTES.HOME}>HomePageへ</Link>
-    </div>
+    </>
   )
 }
