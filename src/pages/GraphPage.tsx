@@ -1,28 +1,22 @@
 import { Link } from "react-router-dom"
 import { ROUTES } from "../ROUTES"
-import { Bar, BarChart, Tooltip, XAxis, YAxis } from "recharts"
+import { State } from "../App"
 
+type Props = {
+  state:State
+}
 
-type Props = {}
-
-export default function GraphPage({}: Props) {
-  const data: object[] = [
-    {month: "1月", storeA: 400, storeB: 200},
-    {month: "2月", storeA: 500, storeB: 300},
-    {month: "3月", storeA: 700, storeB: 800}
-  ];
+export default function GraphPage({state}: Props) {
+  const total = state.expenses.reduce((sum, expense) => {
+    return sum + expense.amount;
+  },0)
 
   return (
     <div>
-      <BarChart width={400} height={300} data={data}>
-        <XAxis dataKey="month"/>
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="storeA" stackId="a"/>
-        <Bar dataKey="storeB" stackId="a"/>
-      </BarChart>
-      <Link to={ROUTES.EXPENSE}>記録へ</Link>
-      <Link to={ROUTES.HOME}>ホームページへ</Link>
+      {total}
+
+      <Link to={ROUTES.HOME}>HomePageへ</Link>
+      <Link to={ROUTES.EXPENSE}>ExpensePageへ</Link>
     </div>
   )
 }

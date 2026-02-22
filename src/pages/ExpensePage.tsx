@@ -1,11 +1,15 @@
-import { ChangeEvent, useEffect, useReducer, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useLocalStorage } from '../useLocalStorage'
 import Budget from '../components/Budget'
 import ExpenseForm from '../components/ExpenseForm'
 import ExpenseList from '../components/ExpenseList'
 import { ROUTES } from '../ROUTES'
 import { Link } from 'react-router-dom'
-
+import { State } from "../App"
+type Props = {
+  state: State
+  dispatch: React.Dispatch<any>;
+}
 export type Expense = {
     id: number
     amount: number
@@ -13,8 +17,8 @@ export type Expense = {
     checked: boolean
     type: "fixed" | "variable" | null
   }
-export default function ExpensePage() {
-  const [variableValue, setVariableValue] = useState("");
+export default function ExpensePage({state, dispatch}: Props) {
+    const [variableValue, setVariableValue] = useState("");
     const [fixedValue, setFixedValue] = useState("");
     const [expenseType, setExpenseType] = useState<"fixed" | "variable" | null>(null)
     const [costValue, setCostValue] = useState(0);
@@ -48,67 +52,6 @@ export default function ExpensePage() {
     const handleCostValue = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
       setCostValue(Number(e.target.value));
     }
-  
-    type State = {
-      expenses:Expense[]
-    }
-  
-    const initialState: State = {
-      expenses: []
-    }
-  
-    type Action = 
-    | {type: "ADD", payload: Expense}
-    | {type:"CHECK",payload: number}
-    | {type: "DELETE"}
-    
-    const reducer = (state: State, action: Action) => {
-      switch(action.type){
-        case "ADD":
-          return {
-            ...state,
-            expenses: [...state.expenses, action.payload]
-          }
-        
-        case "CHECK":
-          return {
-            ...state,
-            expenses: state.expenses.map((expense) => {
-              if(expense.id === action.payload){
-                return {...expense, checked: !expense.checked};
-              }
-              return expense;
-            })
-          }
-  
-        case "DELETE":
-          return {
-            ...state,
-            expenses: state.expenses.filter((expense)=> expense.checked != true)
-          }
-  
-         default:
-          return state;
-      }
-    }
-  
-    
-    const init = (initialState: State): State => {
-      if(typeof window === "undefined"){
-        return initialState
-      }
-      const jsonValue = localStorage.getItem("expenses");
-      if(jsonValue !== null) {
-        return JSON.parse(jsonValue) as State;
-      }
-      return initialState;
-    }
-  
-    const [state, dispatch] = useReducer(reducer, initialState, init);
-  
-    useEffect(() => {
-      localStorage.setItem("expenses", JSON.stringify(state))
-    }, [state])
   
     const handleADD = () => {
       const newExpense: Expense = {
