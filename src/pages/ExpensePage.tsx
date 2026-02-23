@@ -38,7 +38,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     const addBudget = () => {
       setBudget(Number(inputBudget));
     }
-  
+
     const handleFixed = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) => {
       setFixedValue(e.target.value);
       setExpenseType("fixed");
