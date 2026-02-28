@@ -23,6 +23,14 @@ export type Expense = {
     month: string
   }
 
+  type ExpenseServer = {
+    amount: number
+    category:string
+    checked: boolean
+    type: "fixed" | "variable" | null
+    month: string
+  }
+
 export default function ExpensePage({state, dispatch, currentMonth, setCurrentMonth}: Props) {
     const [variableValue, setVariableValue] = useState("");
     const [fixedValue, setFixedValue] = useState("");
@@ -53,13 +61,12 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setCostValue(Number(e.target.value));
     }
   
-    const handleADD = () => {
+    const handleADD = async() => {
 
       if (!expenseType) return;
       if (!costValue || costValue <= 0) return;
 
-      const newExpense: Expense = {
-        id:Date.now(),
+      const newExpense: ExpenseServer = {
         amount: costValue,
         category:expenseType === "fixed"
           ? fixedValue
@@ -68,8 +75,18 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
         type: expenseType,
         month: currentMonth
       }
+
+      const response = await fetch("http://localhost:3000/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newExpense)
+      });
+
+      const saveExpense: Expense = await response.json();
   
-      dispatch({type:"ADD", payload:newExpense});
+      dispatch({type:"ADD", payload:saveExpense});
   
       setVariableValue("");
       setFixedValue("");
@@ -77,8 +94,18 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setCostValue(0);
     }
   
-    const handleChecked = (id: number) => {
-      dispatch({type: "CHECK", payload: id})
+    const handleChecked = async (id: number) => {
+
+      const response = await fetch(`http://localhost:3000/transactions/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const updatedExpense: Expense =await response.json();
+
+      dispatch({type: "CHECK", payload: updatedExpense.id})
     }
   
     useEffect(() => {

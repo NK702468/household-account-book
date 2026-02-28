@@ -26,8 +26,9 @@ function App() {
   
     type Action = 
     | {type: "ADD", payload: Expense}
-    | {type:"CHECK",payload: number}
+    | {type:"CHECK", payload: number}
     | {type: "DELETE"}
+    | {type:"SET_ALL", payload: Expense[]}
     
     const reducer = (state: State, action: Action) => {
       switch(action.type){
@@ -53,6 +54,12 @@ function App() {
             ...state,
             expenses: state.expenses.filter((expense)=> expense.checked != true)
           }
+
+        case "SET_ALL":
+          return {
+            ...state,
+            expenses: action.payload
+          }
   
          default:
           return state;
@@ -73,9 +80,17 @@ function App() {
 
     const [state, dispatch] = useReducer(reducer, initialState, init);
   
+    // useEffect(() => {
+    //   localStorage.setItem("expenses", JSON.stringify(state))
+    // }, [state])
+
     useEffect(() => {
-      localStorage.setItem("expenses", JSON.stringify(state))
-    }, [state])
+      fetch("http://localhost:3000/transactions")
+        .then(res => res.json())
+        .then((data: Expense[]) => {
+          dispatch({type: "SET_ALL", payload: data})
+        })
+    },[])
 
   return (
     <>
