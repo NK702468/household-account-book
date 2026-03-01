@@ -93,6 +93,14 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setExpenseType(null);
       setCostValue(0);
     }
+
+    const handleDelete = async () => {
+      await fetch("http://localhost:3000/transactions", {
+        method: "DELETE"
+      });
+
+      dispatch({type:"DELETE"});
+    }
   
     const handleChecked = async (id: number) => {
 
@@ -112,11 +120,14 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     if (!fixedValue && !variableValue) {
       setExpenseType(null);
     }
+
+    
   }, [fixedValue, variableValue]);
   
     const total = state.expenses.reduce((sum, expense) => {
       return sum + expense.amount
     }, 0)
+
   
     const remaining = budget - total;
   
@@ -139,7 +150,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
         />
   
       <button type="button" onClick={() => handleADD()}>追加</button>
-      <button type="button" onClick={() => dispatch({type: "DELETE"})}>削除</button>
+      <button type="button" onClick={() => handleDelete()}>削除</button>
   
       <ExpenseList expenses={state.expenses} onChange={handleChecked} />
       <Link to={ROUTES.HOME}>ホームページへ</Link>
