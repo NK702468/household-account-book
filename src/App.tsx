@@ -67,18 +67,18 @@ function App() {
     }
   
     
-    const init = (initialState: State): State => {
-      if(typeof window === "undefined"){
-        return initialState
-      }
-      const jsonValue = localStorage.getItem("expenses");
-      if(jsonValue !== null) {
-        return JSON.parse(jsonValue) as State;
-      }
-      return initialState;
-    }
+    // const init = (initialState: State): State => {
+    //   if(typeof window === "undefined"){
+    //     return initialState
+    //   }
+    //   const jsonValue = localStorage.getItem("expenses");
+    //   if(jsonValue !== null) {
+    //     return JSON.parse(jsonValue) as State;
+    //   }
+    //   return initialState;
+    // }
 
-    const [state, dispatch] = useReducer(reducer, initialState, init);
+    const [state, dispatch] = useReducer(reducer, initialState,);
   
     // useEffect(() => {
     //   localStorage.setItem("expenses", JSON.stringify(state))

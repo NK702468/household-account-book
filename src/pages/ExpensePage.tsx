@@ -99,7 +99,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
         method: "DELETE"
       });
 
-      dispatch({type:"DELETE"});
+      dispatch({type: "DELETE"});
     }
   
     const handleChecked = async (id: number) => {
@@ -111,7 +111,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
         }
       })
 
-      const updatedExpense: Expense =await response.json();
+      const updatedExpense: Expense = await response.json();
 
       dispatch({type: "CHECK", payload: updatedExpense.id})
     }
@@ -121,7 +121,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setExpenseType(null);
     }
 
-    
+
   }, [fixedValue, variableValue]);
   
     const total = state.expenses.reduce((sum, expense) => {
