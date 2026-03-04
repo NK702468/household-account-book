@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { useLocalStorage } from '../useLocalStorage'
 import Budget from '../components/Budget'
 import ExpenseForm from '../components/ExpenseForm'
 import ExpenseList from '../components/ExpenseList'
@@ -37,14 +36,38 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     const [expenseType, setExpenseType] = useState<"fixed" | "variable" | null>(null)
     const [costValue, setCostValue] = useState(0);
     const [inputBudget, setInputBudget] = useState("");
-    const [budget, setBudget] = useLocalStorage("budget", 0);
+    const [budget, setBudget] = useState(0);
   
     const handleBudget = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
       setInputBudget(e.target.value);
     }
+
+    useEffect(() => {
+      const fetchBudget = async () => {
+        const res = await fetch(`http://localhost:3000/budget/${currentMonth}`);
+        const data = await res.json();
+        setBudget(data.amount);
+      };
+
+      fetchBudget();
+    }, [currentMonth])
   
-    const addBudget = () => {
-      setBudget(Number(inputBudget));
+    const addBudget = async () => {
+      const newBudget = Number(inputBudget);
+
+      const res = await fetch("http://localhost:3000/budget", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          month: currentMonth,
+          amount: newBudget
+        })
+      })
+
+      const data = await res.json();
+      setBudget(data.amount);
     }
 
     const handleFixed = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) => {
@@ -120,7 +143,6 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     if (!fixedValue && !variableValue) {
       setExpenseType(null);
     }
-
 
   }, [fixedValue, variableValue]);
   

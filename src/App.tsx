@@ -65,24 +65,8 @@ function App() {
           return state;
       }
     }
-  
-    
-    // const init = (initialState: State): State => {
-    //   if(typeof window === "undefined"){
-    //     return initialState
-    //   }
-    //   const jsonValue = localStorage.getItem("expenses");
-    //   if(jsonValue !== null) {
-    //     return JSON.parse(jsonValue) as State;
-    //   }
-    //   return initialState;
-    // }
 
     const [state, dispatch] = useReducer(reducer, initialState,);
-  
-    // useEffect(() => {
-    //   localStorage.setItem("expenses", JSON.stringify(state))
-    // }, [state])
 
     useEffect(() => {
       fetch("http://localhost:3000/transactions")
