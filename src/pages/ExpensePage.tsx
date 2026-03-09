@@ -42,6 +42,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       setInputBudget(e.target.value);
     }
 
+    
     useEffect(() => {
       const fetchBudget = async () => {
         const res = await fetch(`http://localhost:3000/budget/${currentMonth}`);
