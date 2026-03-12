@@ -11,7 +11,7 @@ export default function ExpenseList({expenses, onChange}: ExpenseListProps) {
         <ul>
       {expenses.map((expense) => {
         return <li key={expense.id}>
-          <input type="text" value={expense.category} disabled={!expense.checked} />
+          {expense.category}
           {`¥${expense.amount}`}
           <input type="checkbox" checked={expense.checked} onChange={() => onChange(expense.id)} />
         </li>
