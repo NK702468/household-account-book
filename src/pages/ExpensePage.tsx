@@ -36,7 +36,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     const [expenseType, setExpenseType] = useState<"fixed" | "variable" | null>(null)
     const [costValue, setCostValue] = useState(0);
     const [inputBudget, setInputBudget] = useState("");
-    const [budget, setBudget] = useState(0);
+    const [budget, setBudget] = useState<number | null>(null);
   
     const handleBudget = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
       setInputBudget(e.target.value);
@@ -118,11 +118,16 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     }
 
     const handleDelete = async () => {
-      await fetch("http://localhost:3000/transactions", {
+      console.log("削除クリック");
+      const res = await fetch("http://localhost:3000/transactions", {
         method: "DELETE"
       });
 
-      dispatch({type: "DELETE"});
+      const data = await res.json();
+
+      console.log("DELETE後", data);
+      
+      dispatch({type: "SET_ALL", payload: data});
     }
   
     const handleChecked = async (id: number) => {
@@ -151,7 +156,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     }, 0)
 
   
-    const remaining = budget - total;
+    const remaining = (budget ?? 0) - total;
   
     return (
       <>
