@@ -51,6 +51,18 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
 
       fetchBudget();
     }, [currentMonth])
+
+    useEffect(() => {
+          const fetchTransactions = async () => {
+            const res = await fetch(`http://localhost:3000/transactions`)
+    
+            const data : Expense[] = await res.json()
+    
+            dispatch({type: "SET_ALL", payload: data})
+          }
+    
+          fetchTransactions()
+        },[])
   
     const addBudget = async () => {
       const newBudget = Number(inputBudget);
@@ -150,11 +162,16 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
     }
 
   }, [fixedValue, variableValue]);
+
+    const filteredExpenses = state.expenses.filter(
+      expense => expense.month === currentMonth
+    )
   
-    const total = state.expenses.reduce((sum, expense) => {
+    const total = filteredExpenses.reduce((sum, expense) => {
       return sum + expense.amount
     }, 0)
 
+    
   
     const remaining = (budget ?? 0) - total;
   
@@ -179,7 +196,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
       <button type="button" onClick={() => handleADD()}>追加</button>
       <button type="button" onClick={() => handleDelete()}>削除</button>
   
-      <ExpenseList expenses={state.expenses} onChange={handleChecked} />
+      <ExpenseList expenses={filteredExpenses} onChange={handleChecked} />
       <Link to={ROUTES.HOME}>ホームページへ</Link>
       <Link to={ROUTES.GRAPH}>グラフへ</Link>
       </>

@@ -5,7 +5,7 @@ import ExpensePage from "./pages/ExpensePage"
 import "./App.css"
 import { ROUTES } from "./ROUTES"
 import { Expense } from "./pages/ExpensePage";
-import { useEffect, useReducer, useState } from "react"
+import { useReducer, useState } from "react"
 
 export type State = {
       expenses:Expense[]
@@ -68,14 +68,7 @@ function App() {
 
     const [state, dispatch] = useReducer(reducer, initialState,);
 
-    useEffect(() => {
-      fetch("http://localhost:3000/transactions")
-        .then(res => res.json())
-        .then((data: Expense[]) => {
-          dispatch({type: "SET_ALL", payload: data})
-        })
-    },[])
-
+    
   return (
     <>
     <BrowserRouter>
