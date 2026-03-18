@@ -54,7 +54,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
 
     useEffect(() => {
           const fetchTransactions = async () => {
-            const res = await fetch(`http://localhost:3000/transactions`)
+            const res = await fetch(`http://localhost:3000/transactions?month=${currentMonth}`)
     
             const data : Expense[] = await res.json()
     
