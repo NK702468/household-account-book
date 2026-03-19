@@ -44,7 +44,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
 
     useEffect(() => {
       const fetchBudget = async () => {
-        const res = await fetch(`http://localhost:3000/budget/${currentMonth}`);
+        const res = await fetch(`https://household-backend-1ncg.onrender.com/budget/${currentMonth}`);
         const data = await res.json();
         setBudget(data.amount);
       };
@@ -54,7 +54,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
 
     useEffect(() => {
           const fetchTransactions = async () => {
-            const res = await fetch(`http://localhost:3000/transactions?month=${currentMonth}`)
+            const res = await fetch(`https://household-backend-1ncg.onrender.com/transactions?month=${currentMonth}`)
     
             const data : Expense[] = await res.json()
     
@@ -62,12 +62,12 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
           }
     
           fetchTransactions()
-        },[])
+        },[currentMonth])
   
     const addBudget = async () => {
       const newBudget = Number(inputBudget);
 
-      const res = await fetch("http://localhost:3000/budget", {
+      const res = await fetch("https://household-backend-1ncg.onrender.com/budget", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -111,7 +111,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
         month: currentMonth
       }
 
-      const response = await fetch("http://localhost:3000/transactions", {
+      const response = await fetch("https://household-backend-1ncg.onrender.com/transactions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -131,7 +131,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
 
     const handleDelete = async () => {
       console.log("削除クリック");
-      const res = await fetch("http://localhost:3000/transactions", {
+      const res = await fetch("https://household-backend-1ncg.onrender.com/transactions", {
         method: "DELETE"
       });
 
@@ -144,7 +144,7 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
   
     const handleChecked = async (id: number) => {
 
-      const response = await fetch(`http://localhost:3000/transactions/${id}`, {
+      const response = await fetch(`https://household-backend-1ncg.onrender.com/transactions/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"
