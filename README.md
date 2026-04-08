@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+# 家計簿アプリ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
+毎月の支出や予算を管理するための家計簿アプリです。
+支出の追加・削除、月ごとの切り替え、予算設定などの機能を実装しています。
 
-Currently, two official plugins are available:
+## 作成目的
+日々の支出を管理できるWebアプリを作成したいと考え開発しました。
+また、React・Node.js・MySQLを用いたフルスタックな開発経験を積むことも目的としました。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 主な機能
+- 支出の追加
+- 支出の削除
+- 月ごとの表示切り替え
+- 予算設定
+- 残額の自動計算
 
-## Expanding the ESLint configuration
+## 使用技術
+### フロントエンド
+- React
+- TypeScript
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### バックエンド
+- Node.js
+- Express
 
-- Configure the top-level `parserOptions` property like this:
+### データベース
+- MySQL
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### その他
+- Git
+- GitHub
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 工夫した点
+- 月ごとに支出データを切り替えて表示できるようにした
+- 予算と支出額から残額を自動で計算できるようにした
+- DBに保存したデータがリロード後も保持されるようにした
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## 苦労した点
+- フロントエンドとバックエンドの連携部分でデータが正しく表示されないことがあり、原因を調査しながら修正した
+- 状態管理や非同期処理の理解に苦戦したが、調べながら実装を進めた
