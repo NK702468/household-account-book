@@ -5,7 +5,7 @@ import ExpenseList from '../components/ExpenseList'
 import { ROUTES } from '../ROUTES'
 import { Link } from 'react-router-dom'
 import { State } from "../App"
-import styles from "../CSS Module/ExpensePage.module.css"
+import styles from "../styles/ExpensePage.module.css"
 
 
 type Props = {

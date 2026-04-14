@@ -1,5 +1,5 @@
 import { Expense } from "../pages/ExpensePage"
-import styles from "../CSS Module/ExpenseList.module.css"
+import styles from "../styles/ExpenseList.module.css"
 
 type ExpenseListProps = {
     expenses: Expense[]

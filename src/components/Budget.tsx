@@ -1,4 +1,4 @@
-import styles from "../CSS Module/Budget.module.css"
+import styles from "../styles/Budget.module.css"
 
 type BudgetProps = {
     remaining:number

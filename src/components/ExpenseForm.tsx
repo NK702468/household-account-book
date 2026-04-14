@@ -1,4 +1,4 @@
-import styles from "../CSS Module/ExpenseForm.module.css"
+import styles from "../styles/ExpenseForm.module.css"
 
 type ExpenseFormProps = {
     fixedValue: string
