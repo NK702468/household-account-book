@@ -1,4 +1,5 @@
 import { Expense } from "../pages/ExpensePage"
+import styles from "../CSS Module/ExpenseList.module.css"
 
 type ExpenseListProps = {
     expenses: Expense[]
@@ -8,15 +9,27 @@ type ExpenseListProps = {
 export default function ExpenseList({expenses, onChange}: ExpenseListProps) {
   return (
     <div>
-        <ul>
-      {expenses.map((expense) => {
-        return <li key={expense.id}>
-          {expense.category}
-          {`¥${expense.amount}`}
-          <input type="checkbox" checked={expense.checked} onChange={() => onChange(expense.id)} />
-        </li>
-      })}
-    </ul>
+      <ul className={styles.expenseList}>
+        {expenses.map((expense) => {
+          return (
+            <li key={expense.id} className={styles.expenseItem}>
+              <div className={styles.expenseInfo}>
+                <span className={styles.expenseCategory}>
+                  {expense.category}
+                </span>
+                <span className={styles.expenseAmount}>
+                  ¥{expense.amount}
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={expense.checked}
+                onChange={() => onChange(expense.id)}
+              />
+            </li>
+          )
+        })}
+      </ul>
     </div>
   )
 }

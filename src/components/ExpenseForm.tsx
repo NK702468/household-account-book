@@ -1,3 +1,4 @@
+import styles from "../CSS Module/ExpenseForm.module.css"
 
 type ExpenseFormProps = {
     fixedValue: string
@@ -20,24 +21,42 @@ export default function ExpenseForm({
 }: ExpenseFormProps) {
   return (
     <>
-    <div className="Fixed">
-      固定費：
-    <select name="fixed" onChange={onFixedChange} disabled={expenseType === "variable"} value={fixedValue}>
-      <option value="">選んでください</option>
-      <option value="家賃">家賃</option>
-      <option value="光熱費">光熱費</option>
-      <option value="通信費">通信費</option>
-      <option value="保険料">保険料</option>
-    </select>
-    </div>
-    <div className="Variable">
-      変動費：
-      <input type="text" className="inputVariable" onChange={onVariableChange} disabled={expenseType === "fixed"} value={variableValue} />
-    </div>
-    <div className="Cost">
-      金額：
-      <input type="number" className="cost" onChange={onCostChange} value={costValue === 0 ? "" : costValue}/>
-    </div>
+    <div className={styles.formGroup}>
+        <label>固定費</label>
+        <select
+          name="fixed"
+          onChange={onFixedChange}
+          disabled={expenseType === "variable"}
+          value={fixedValue}
+        >
+          <option value="">選んでください</option>
+          <option value="家賃">家賃</option>
+          <option value="光熱費">光熱費</option>
+          <option value="通信費">通信費</option>
+          <option value="保険料">保険料</option>
+        </select>
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>変動費</label>
+        <input
+          type="text"
+          onChange={onVariableChange}
+          disabled={expenseType === "fixed"}
+          value={variableValue}
+          placeholder="例: 食費"
+        />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label>金額</label>
+        <input
+          type="number"
+          onChange={onCostChange}
+          value={costValue === 0 ? "" : costValue}
+          placeholder="金額を入力"
+        />
+      </div>
     </>
   )
 }
