@@ -5,6 +5,8 @@ import ExpenseList from '../components/ExpenseList'
 import { ROUTES } from '../ROUTES'
 import { Link } from 'react-router-dom'
 import { State } from "../App"
+import styles from "../CSS Module/ExpensePage.module.css"
+
 
 type Props = {
   state: State
@@ -177,28 +179,68 @@ export default function ExpensePage({state, dispatch, currentMonth, setCurrentMo
   
     return (
       <>
-      <input type="month" value={currentMonth} onChange={(e) => setCurrentMonth(e.target.value)}/>
-  
-      <h1>家計簿</h1>
-  
-      <Budget onChange={handleBudget} remaining={remaining} onClick={addBudget}/>
-  
-      <ExpenseForm
-        fixedValue={fixedValue}
-        variableValue={variableValue}
-        costValue={costValue}
-        expenseType={expenseType}
-        onFixedChange={handleFixed}
-        onVariableChange={handleVariable}
-        onCostChange={handleCostValue}
+  <div className={styles.page}>
+      <header className={styles.pageHeader}>
+        <h1>家計簿</h1>
+        <input
+          type="month"
+          value={currentMonth}
+          onChange={(e) => setCurrentMonth(e.target.value)}
+          className={styles.monthInput}
         />
-  
-      <button type="button" onClick={() => handleADD()}>追加</button>
-      <button type="button" onClick={() => handleDelete()}>削除</button>
-  
-      <ExpenseList expenses={filteredExpenses} onChange={handleChecked} />
-      <Link to={ROUTES.HOME}>ホームページへ</Link>
-      <Link to={ROUTES.GRAPH}>グラフへ</Link>
-      </>
+      </header>
+
+      <div className={styles.topGrid}>
+        <section className={styles.card}>
+          <h2>予算設定</h2>
+          <Budget
+            onChange={handleBudget}
+            remaining={remaining}
+            onClick={addBudget}
+          />
+        </section>
+
+        <section className={styles.card}>
+          <h2>支出を追加</h2>
+          <ExpenseForm
+            fixedValue={fixedValue}
+            variableValue={variableValue}
+            costValue={costValue}
+            expenseType={expenseType}
+            onFixedChange={handleFixed}
+            onVariableChange={handleVariable}
+            onCostChange={handleCostValue}
+          />
+
+          <div className={styles.buttonRow}>
+            <button
+              type="button"
+              className={styles.addButton}
+              onClick={handleADD}
+            >
+              追加
+            </button>
+            <button
+              type="button"
+              className={styles.deleteButton}
+              onClick={handleDelete}
+            >
+              削除
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <section className={styles.card}>
+        <h2>支出一覧</h2>
+        <ExpenseList expenses={filteredExpenses} onChange={handleChecked} />
+      </section>
+
+      <nav className={styles.linkRow}>
+        <Link to={ROUTES.HOME}>ホームページへ</Link>
+        <Link to={ROUTES.GRAPH}>グラフへ</Link>
+      </nav>
+    </div>
+    </>
     )
 }

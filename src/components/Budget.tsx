@@ -1,3 +1,4 @@
+import styles from "../CSS Module/Budget.module.css"
 
 type BudgetProps = {
     remaining:number
@@ -7,10 +8,18 @@ type BudgetProps = {
 
 export default function Budget({remaining, onChange, onClick}: BudgetProps) {
   return (
-    <div>
-        <input type="text" className="inputBudget" onChange={onChange} />
-        <button onClick={onClick} >予算を追加</button>
-        <h2>{remaining}</h2>
+    <div className={styles.budgetBox}>
+      <input
+        type="text"
+        className={styles.inputBudget}
+        onChange={onChange}
+        placeholder="予算を入力"
+      />
+      <button onClick={onClick} className={styles.budgetButton}>
+        予算を追加
+      </button>
+      <p className={styles.remainingLabel}>残り予算</p>
+      <h2 className={styles.remainingAmount}>¥{remaining}</h2>
     </div>
   )
 }
